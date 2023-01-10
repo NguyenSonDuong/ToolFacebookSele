@@ -98,6 +98,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="controller\ChromeController.cs" />
+    <Compile Include="model\Comment.cs" />
     <Compile Include="model\Groups.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="MainWindow" Height="533.72" Width="925.248">
+        Title="MainWindow" Height="743.72" Width="1294.148">
+    
     <Page>
         <Page.Resources>
             <ResourceDictionary>
-                
+
                 <ResourceDictionary.MergedDictionaries>
                     <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                     <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
@@ -22,10 +24,7 @@
                     <ItemsPresenter />
                 </ControlTemplate>
                 <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
-                    <Setter Property="Foreground" Value="Transparent" />
-                    <Setter Property="Opacity" Value="0" />
-                    <Setter Property="Visibility" Value="Collapsed"></Setter>
-                    <Setter Property="Height" Value="0"></Setter>
+                    <Setter Property="Height" Value="50"></Setter>
                 </Style>
                 <Style TargetType="DataGridColumnHeader">
                     <Setter Property="FontWeight"  Value="Medium" ></Setter>
@@ -52,38 +51,41 @@
                 </DataTemplate>
             </ResourceDictionary>
         </Page.Resources>
-        <Grid Margin="30">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <materialDesign:Card Grid.Column="0" Margin="10">
-                <StackPanel Margin="30">
-                    <Label FontSize="20" FontWeight="Black"
+        <Grid>
+            <Grid Margin="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <materialDesign:Card Grid.Column="0" Margin="10">
+                    <StackPanel Margin="30">
+                        <Label FontSize="20" FontWeight="Black"
                        Content="FILTER COMMET IN FACEBOOK"
                        Margin="0 10"></Label>
-                    <TextBox Grid.Row="4"
+                        <TextBox Grid.Row="4"
                  Grid.Column="1"
+                             Name="txtIdPost"
                          materialDesign:TextFieldAssist.HasClearButton="True"
                      FontSize="15"
                      Padding="12 12"
                      materialDesign:HintAssist.Hint="ID post"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" ></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Row="4"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" ></ColumnDefinition>
+                                <ColumnDefinition Width="1*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Row="4"
                      Margin="0 20"
                              
                              Grid.Column="0"
                      FontSize="15"
                          materialDesign:TextFieldAssist.HasClearButton="True"
                      Padding="12 12"
+                                 Name="txtIdGroup"
                      materialDesign:HintAssist.Hint="ID group"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                        <Button
+                            <Button
                         Padding="12 0"
                         Grid.Column="2"
                          Height="45"
@@ -91,135 +93,213 @@
                         Margin="10 0"
                       Content="Scan Groups"
                       Style="{StaticResource MaterialDesignRaisedDarkButton}" />
-                    </Grid>
-                    <ListView  Background="Transparent" ScrollViewer.CanContentScroll="True" 
+                        </Grid>
+                        <Button
+                        Padding="12 0"
+                        Grid.Column="2"
+                         Height="45"
+                        Click="Button_Click"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                      Content="Scan Comment"
+                        Background="OrangeRed"
+                        BorderBrush="Transparent"
+                      Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+                        <ListView  Background="Transparent" ScrollViewer.CanContentScroll="True" 
                                ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                Template="{StaticResource NonScrollable}"
-                          Name="listViewDocuments" VerticalAlignment="Top" Width="Auto" 
+                          Name="listViewGroups" VerticalAlignment="Top" Width="Auto" 
                       BorderThickness="0">
-                        <ListView.ItemContainerStyle>
+                            <ListView.ItemContainerStyle>
 
-                            <Style TargetType="ListBoxItem">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#2F000000"></Setter>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="False">
-                                        <Setter Property="Background" Value="White"></Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-
-                                <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListBoxItem_PreviewMouseLeftButtonDown"></EventSetter>
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                <Setter Property="BorderThickness" Value="0"></Setter>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                            <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
+                                <Style TargetType="ListBoxItem">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#2F000000"></Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="False">
+                                            <Setter Property="Background" Value="White"></Setter>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="BorderThickness" Value="0"></Setter>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
                                   BorderThickness="{TemplateBinding BorderThickness}" 
                                   Background="{TemplateBinding Background}">
-                                                <GridViewRowPresenter Content="{TemplateBinding Content}"
+                                                    <GridViewRowPresenter Content="{TemplateBinding Content}"
                                       Margin="{TemplateBinding Padding}" >
 
-                                                </GridViewRowPresenter>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                        <ListView.View >
-                            <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                                <GridViewColumn Header="Browswer type" Width="100"  >
-                                    <GridViewColumn.CellTemplate >
-                                        <DataTemplate >
-                                            <materialDesign:PackIcon Kind="{Binding Fingerprint.BrowserIconType}"
-                                                             Foreground="#20123a"
-                                                             HorizontalAlignment="Center"
-                                                             VerticalAlignment="Center"
-                                                             Height="30"
-                                                             Width="30"
-                                                             Margin="10"
-                                                             HorizontalContentAlignment="Stretch"
-                                                             ></materialDesign:PackIcon>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="250" Header="Name"  >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Left" Text="{Binding Fingerprint.Name}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn Width="150"   >
-                                    <GridViewColumn.HeaderTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="System" HorizontalAlignment="Center"
-                                               Margin="7"
-                                               FontSize="13"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.HeaderTemplate>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <materialDesign:PackIcon Kind="{Binding Fingerprint.OsIconType}" Foreground="#20123a" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="30" Margin="10" HorizontalContentAlignment="Center"></materialDesign:PackIcon>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn  Header="Version"  Width="150">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock HorizontalAlignment="Center" Text="{Binding Fingerprint.BrowserVersion}"></TextBlock>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn  Width="150"  Header="Country" >
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch"  Visibility="{Binding IsProxy}">
-                                                <Border Background="{Binding ProxyCountryStatus}" CornerRadius="5">
-                                                    <TextBlock HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"   Text="{Binding Proxy.Country}"  Padding="15 5" Foreground="White">
-                                                        <TextBlock.ToolTip>
-                                                            <StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontWeight="Bold"  Text="Ip: "></TextBlock>
-                                                                    <TextBlock Margin="5 0 0 0"  Text="{Binding Proxy.Ip}"></TextBlock>
-                                                                    <TextBlock Margin="0 0"  Text=":"></TextBlock>
-                                                                    <TextBlock Margin="0 0"  Text="{Binding Proxy.Port}"></TextBlock>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontWeight="Bold"  Text="Type Proxy: "></TextBlock>
-                                                                    <TextBlock Margin="5 0"  Text="{Binding Proxy.Type}"></TextBlock>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontWeight="Bold" Text="City:"></TextBlock>
-                                                                    <TextBlock Margin="5 0" Text="{Binding Proxy.Details.City}"></TextBlock>
-                                                                </StackPanel>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <TextBlock FontWeight="Bold"  Text="Country: "></TextBlock>
-                                                                    <TextBlock Margin="5 0"  Text="{Binding Proxy.Details.Country}"></TextBlock>
-                                                                </StackPanel>
-
-                                                            </StackPanel>
-                                                        </TextBlock.ToolTip>
-                                                        </TextBlock>
+                                                    </GridViewRowPresenter>
                                                 </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
 
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
-            </materialDesign:Card >
-            <materialDesign:Card Grid.Column="1" Margin="10">
-                <Grid Margin="30">
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View >
+                                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                                    <GridViewColumn Header="Browswer type" Width="100"  >
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate >
+                                                <Image></Image>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="250" Header="Name"  >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Id}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="150"   >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Name}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Header="Version"  Width="150">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Link}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn  Header="Version"  Width="150">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Quantity_member}"></TextBlock>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </materialDesign:Card >
+                <materialDesign:Card Grid.Column="1" Margin="10">
+                    <Grid Margin="30">
+                        <StackPanel>
+                            <TextBox Grid.Row="4"
+                 Grid.Column="1"
+                             Name="txtSearch"
+                                     TextChanged="txtSearch_TextChanged"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                     FontSize="15"
+                     Padding="12 12"
+                     materialDesign:HintAssist.Hint="Tìm kiếm"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                            <ListView  Background="Transparent" 
+                          Name="listViewComment" VerticalAlignment="Top" Width="Auto" 
+                      BorderThickness="0">
+                                <ListView.ItemContainerStyle>
 
-                </Grid>
-            </materialDesign:Card>
+                                    <Style TargetType="ListBoxItem">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#2F000000"></Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter Property="Background" Value="White"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+
+
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                        <Setter Property="Height" Value="35"></Setter>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
+                                  BorderThickness="{TemplateBinding BorderThickness}" 
+                                  Background="{TemplateBinding Background}">
+                                                        <GridViewRowPresenter Content="{TemplateBinding Content}"
+                                      Margin="{TemplateBinding Padding}" >
+
+                                                        </GridViewRowPresenter>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View >
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                                        <GridViewColumn Width="250" Header="ID"  >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Id}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="350"  Header="Message" >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Message}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn  Header="Username"  Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Username_comment}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn  Header="Link user"  Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Link_user_comment}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn  Header="Create at"  Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Create_at}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                        
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+            <Grid Background="#7F000000" x:Name="dialog" Visibility="Collapsed">
+                <materialDesign:Card Width="300" Height="300">
+                    <StackPanel
+                   Background="White"
+                HorizontalAlignment="Center"
+                    
+                    VerticalAlignment="Center"
+                Margin="16">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
+                   
+                               Content="ID Post Trống"></Label>
+                        <Button
+                  HorizontalAlignment="Center"
+                  Name="btnCancelDialog"
+                        Click="btnCancelDialog_Click"
+                  CommandParameter="Sample2Cancel"
+                        Margin="50 50"
+                        Width="150"
+                        Height="50"
+                  Content="CANCEL"
+                  IsCancel="True"
+                  Style="{StaticResource MaterialDesignFlatButton}" />
+                    </StackPanel>
+                </materialDesign:Card>
+            </Grid>
         </Grid>
+        
     </Page>
 </Window>

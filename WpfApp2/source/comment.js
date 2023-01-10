@@ -1,4 +1,4 @@
-﻿
+﻿let timeOut = 3500;
 let API = (user_id, token, end_cursor, id_post) => {
     return new Promise((resolve, reject) => {
         fetch("https://www.facebook.com/api/graphql/",

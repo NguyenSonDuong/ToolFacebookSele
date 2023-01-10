@@ -51,6 +51,9 @@ namespace WpfApp2.controller
         public ChromeOptions ChromeOptions { get => chromeOptions; set => chromeOptions = value; }
         public bool IsHide { get => isHide; set => isHide = value; }
         public string User_agent { get => user_agent; set => user_agent = value; }
+        public CallBack CallBack { get => callBack; set => callBack = value; }
+        public CallBackError CallBackError { get => callBackError; set => callBackError = value; }
+        public CallBackEnd CallBackEnd { get => callBackEnd; set => callBackEnd = value; }
 
         public void init(string profilePath, string chromePath)
         {
@@ -119,27 +122,30 @@ namespace WpfApp2.controller
                 JArray endPointData = new JArray();
                 while (isRun)
                 {
-                    JObject dataGet = new JObject(Comment(id_post, next));
+                    String dataaa = Comment(id_post, next);
+                    JObject dataGet = JObject.Parse(dataaa);
                     if (!dataGet.ContainsKey("data") || !dataGet["data"].HasValues)
                     {
-                        if (callBackError != null)
-                            callBackError(dataGet);
+                        if (CallBackError != null)
+                            CallBackError(dataGet);
                         isRun = false;
                         break;
                     }
                     endPointData.Add(dataGet);
-                    if (callBack != null)
-                        callBack(dataGet);
+                    if (CallBack != null)
+                        CallBack(dataGet);
                     if (((bool)dataGet["data"]["node"]["display_comments"]["page_info"]["has_next_page"]))
                     {
+                        Thread.Sleep(timeDeleay);
                         next = dataGet["data"]["node"]["display_comments"]["page_info"]["end_cursor"].ToString();
                     }
                     else
                     {
-                        callBackEnd(endPointData);
+                        CallBackEnd(endPointData);
                         isRun = false;
                         break;
                     }
+                    
                     
                 }
             });
