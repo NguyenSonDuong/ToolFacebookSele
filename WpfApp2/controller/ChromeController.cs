@@ -119,6 +119,7 @@ namespace WpfApp2.controller
             {
                 bool isRun = true;
                 String next = "";
+                ChromeDriver.Navigate().GoToUrl("https://www.facebook.com/");
                 JArray endPointData = new JArray();
                 while (isRun)
                 {
@@ -134,13 +135,15 @@ namespace WpfApp2.controller
                     endPointData.Add(dataGet);
                     if (CallBack != null)
                         CallBack(dataGet);
-                    if (((bool)dataGet["data"]["node"]["display_comments"]["page_info"]["has_next_page"]))
+                    if ((bool)dataGet["data"]["node"]["display_comments"]["page_info"]["has_next_page"])
                     {
                         Thread.Sleep(timeDeleay);
                         next = dataGet["data"]["node"]["display_comments"]["page_info"]["end_cursor"].ToString();
                     }
                     else
                     {
+                        chromeDriver.Close();
+                        chromeDriver.Quit();
                         CallBackEnd(endPointData);
                         isRun = false;
                         break;

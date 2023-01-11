@@ -54,15 +54,77 @@
         <Grid>
             <Grid Margin="30">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*" MinWidth="500"></ColumnDefinition>
+                    <ColumnDefinition Width="4*" MinWidth="700"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <materialDesign:Card Grid.Column="0" Margin="10">
-                    <StackPanel Margin="30">
-                        <Label FontSize="20" FontWeight="Black"
-                       Content="FILTER COMMET IN FACEBOOK"
+                <materialDesign:Card Grid.Column="0" Margin="10" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"></RowDefinition>
+                            <RowDefinition Height="8*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Vertical" Margin="30 0">
+                            <Label FontSize="20" FontWeight="Black"
+                       Content="Config chrome"
                        Margin="0 10"></Label>
-                        <TextBox Grid.Row="4"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Row="4"
+                     Margin="0 0"
+                             
+                             Grid.Column="0"
+                     FontSize="15"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                     Padding="12 12"
+                                 Name="txtProfilePath"
+                     materialDesign:HintAssist.Hint="Profile path"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                                <Button
+                        Padding="12 0"
+                        Grid.Column="2"
+                         Height="45"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Margin="10 0"
+                                    Name="btnProfile"
+                                    Click="btnProfile_Click"
+                      Content="Select forder"
+                      Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Row="4"
+                     Margin="0 20"
+                             
+                             Grid.Column="0"
+                     FontSize="15"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                     Padding="12 12"
+                                 Name="txtChromePath"
+                     materialDesign:HintAssist.Hint="Chrome path"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                                <Button
+                        Padding="12 0"
+                        Grid.Column="2"
+                                    Name="btnChrome"
+                                    Click="btnChrome_Click"
+                         Height="45"
+                        materialDesign:ButtonAssist.CornerRadius="10"
+                        Margin="10 0"
+                      Content="Select file"
+                      Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="30">
+                            <Label FontSize="20" FontWeight="Black"
+                       Content="Filter commet in Facebook"
+                       Margin="0 10"></Label>
+                            <TextBox Grid.Row="4"
                  Grid.Column="1"
                              Name="txtIdPost"
                          materialDesign:TextFieldAssist.HasClearButton="True"
@@ -70,12 +132,12 @@
                      Padding="12 12"
                      materialDesign:HintAssist.Hint="ID post"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2*" ></ColumnDefinition>
-                                <ColumnDefinition Width="1*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <TextBox Grid.Row="4"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Row="4"
                      Margin="0 20"
                              
                              Grid.Column="0"
@@ -85,7 +147,7 @@
                                  Name="txtIdGroup"
                      materialDesign:HintAssist.Hint="ID group"
                  Style="{StaticResource MaterialDesignOutlinedTextBox}" />
-                            <Button
+                                <Button
                         Padding="12 0"
                         Grid.Column="2"
                          Height="45"
@@ -93,8 +155,8 @@
                         Margin="10 0"
                       Content="Scan Groups"
                       Style="{StaticResource MaterialDesignRaisedDarkButton}" />
-                        </Grid>
-                        <Button
+                            </Grid>
+                            <Button
                         Padding="12 0"
                         Grid.Column="2"
                          Height="45"
@@ -104,95 +166,119 @@
                         Background="OrangeRed"
                         BorderBrush="Transparent"
                       Style="{StaticResource MaterialDesignRaisedDarkButton}" />
-                        <ListView  Background="Transparent" ScrollViewer.CanContentScroll="True" 
+                            <ListView  Background="Transparent" ScrollViewer.CanContentScroll="True" 
                                ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                                Template="{StaticResource NonScrollable}"
                           Name="listViewGroups" VerticalAlignment="Top" Width="Auto" 
                       BorderThickness="0">
-                            <ListView.ItemContainerStyle>
+                                <ListView.ItemContainerStyle>
 
-                                <Style TargetType="ListBoxItem">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#2F000000"></Setter>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="False">
-                                            <Setter Property="Background" Value="White"></Setter>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                                    <Setter Property="BorderThickness" Value="0"></Setter>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ListViewItem}">
-                                                <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
+                                    <Style TargetType="ListBoxItem">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#2F000000"></Setter>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="False">
+                                                <Setter Property="Background" Value="White"></Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                        <Setter Property="BorderThickness" Value="0"></Setter>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" 
                                   BorderThickness="{TemplateBinding BorderThickness}" 
                                   Background="{TemplateBinding Background}">
-                                                    <GridViewRowPresenter Content="{TemplateBinding Content}"
+                                                        <GridViewRowPresenter Content="{TemplateBinding Content}"
                                       Margin="{TemplateBinding Padding}" >
 
-                                                    </GridViewRowPresenter>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
+                                                        </GridViewRowPresenter>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
 
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.View >
-                                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                                    <GridViewColumn Header="Browswer type" Width="100"  >
-                                        <GridViewColumn.CellTemplate >
-                                            <DataTemplate >
-                                                <Image></Image>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="250" Header="Name"  >
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Id}"></TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Width="150"   >
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Left" Text="{Binding Name}"></TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn  Header="Version"  Width="150">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Link}"></TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn  Header="Version"  Width="150">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Quantity_member}"></TextBlock>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                    </StackPanel>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View >
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                                        <GridViewColumn Header="Browswer type" Width="100"  >
+                                            <GridViewColumn.CellTemplate >
+                                                <DataTemplate >
+                                                    <Image></Image>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="250" Header="Name"  >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Id}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Width="150"   >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Name}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn  Header="Version"  Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Link}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn  Header="Version"  Width="150">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Quantity_member}"></TextBlock>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Grid>
                 </materialDesign:Card >
                 <materialDesign:Card Grid.Column="1" Margin="10">
                     <Grid Margin="30">
-                        <StackPanel>
-                            <TextBox Grid.Row="4"
-                 Grid.Column="1"
-                             Name="txtSearch"
-                                     TextChanged="txtSearch_TextChanged"
-                         materialDesign:TextFieldAssist.HasClearButton="True"
-                     FontSize="15"
-                     Padding="12 12"
-                     materialDesign:HintAssist.Hint="Tìm kiếm"
-                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"></RowDefinition>
+                            <RowDefinition Height="10*"></RowDefinition>
+                            <RowDefinition Height="1*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0" MaxHeight="50">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Grid.Row="4"
+                                 Grid.Column="0"
+                                             Name="txtSearch"
+                                         KeyDown="txtSearch_KeyDown"
+                                                     TextChanged="txtSearch_TextChanged"
+                                         materialDesign:TextFieldAssist.HasClearButton="True"
+                                     FontSize="15"
+                                     Padding="12 12"
+                                     materialDesign:HintAssist.Hint="Tìm kiếm"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                                <Button
+                                    Name="btnExportExcel"
+                                    Click="btnExportExcel_Click"
+                                    Padding="12 0"
+                                    Grid.Column="2"
+                                     Height="45"
+                                    materialDesign:ButtonAssist.CornerRadius="10"
+                                    Margin="10 0"
+                                  Content="Export excel"
+                      Style="{StaticResource MaterialDesignRaisedDarkButton}" />
+                            </Grid>
+                        <ScrollViewer Grid.Row="1" Height="Auto"  Margin="20">
                             <ListView  Background="Transparent" 
                           Name="listViewComment" VerticalAlignment="Top" Width="Auto" 
                       BorderThickness="0">
@@ -234,7 +320,11 @@
                                         <GridViewColumn Width="250" Header="ID"  >
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Id}"></TextBlock>
+                                                    <TextBlock>
+                                                            <Hyperlink NavigateUri="{Binding Link_comment}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Id}"></TextBlock>
+                                                            </Hyperlink>
+                                                        </TextBlock>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -248,14 +338,11 @@
                                         <GridViewColumn  Header="Username"  Width="150">
                                             <GridViewColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock HorizontalAlignment="Center" Text="{Binding Username_comment}"></TextBlock>
-                                                </DataTemplate>
-                                            </GridViewColumn.CellTemplate>
-                                        </GridViewColumn>
-                                        <GridViewColumn  Header="Link user"  Width="150">
-                                            <GridViewColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Link_user_comment}"></TextBlock>
+                                                    <TextBlock>
+                                                            <Hyperlink NavigateUri="{Binding Link_user_comment}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                                <TextBlock HorizontalAlignment="Center" Text="{Binding Username_comment}"></TextBlock>
+                                                            </Hyperlink>
+                                                        </TextBlock>
                                                 </DataTemplate>
                                             </GridViewColumn.CellTemplate>
                                         </GridViewColumn>
@@ -269,28 +356,55 @@
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-                        </StackPanel>
-                        
+                        </ScrollViewer>
+                        <Grid Grid.Row="2">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="10*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                        <Label FontSize="15" Content="Số lượng: "></Label>
+                                        <Label FontSize="15" Name="lbQuatity" Content=""></Label>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                        <Label FontSize="15" Content="Tổng: "></Label>
+                                        <Label FontSize="15" Name="lbTotal" Content=""></Label>
+                                    </StackPanel>
+                                </Grid>
+                                <ProgressBar
+                                x:Name="prComment"
+                              Height="10"
+                              Value="0"/>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </materialDesign:Card>
             </Grid>
             <Grid Background="#7F000000" x:Name="dialog" Visibility="Collapsed">
-                <materialDesign:Card Width="300" Height="300">
+                <materialDesign:Card Width="300" Height="150">
                     <StackPanel
                    Background="White"
                 HorizontalAlignment="Center"
                     
                     VerticalAlignment="Center"
                 Margin="16">
-                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
-                   
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                            <materialDesign:PackIcon Foreground="Red" Name="iconType" VerticalAlignment="Center" Kind="Error" Width="40" Height="30"></materialDesign:PackIcon>
+                            <Label VerticalAlignment="Center" FontWeight="Bold" Name="lbType" FontSize="20" Content="Lỗi: "></Label>
+                            <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20"
+                                Name="lbMessage"
                                Content="ID Post Trống"></Label>
+                        </StackPanel>
+                        
                         <Button
                   HorizontalAlignment="Center"
                   Name="btnCancelDialog"
                         Click="btnCancelDialog_Click"
                   CommandParameter="Sample2Cancel"
-                        Margin="50 50"
+                        Margin="0 0"
                         Width="150"
                         Height="50"
                   Content="CANCEL"
