@@ -112,7 +112,14 @@ namespace WpfApp2.controller
             
             return output;
         }
+        public String JoinGroup(String idGroups)
+        {
+            String script = File.ReadAllText(@"source\joingroups.js");
+            script = script.Replace("%<ID_GROUPS>%", idGroups);
+            String output = (String)chromeDriver.ExecuteScript(script);
 
+            return output;
+        }
         public Thread getListComment(int timeDeleay,String id_post)
         {
             Thread thread = new Thread(() =>
@@ -150,6 +157,42 @@ namespace WpfApp2.controller
                     }
                     
                     
+                }
+            });
+            thread.IsBackground = true;
+            thread.Start();
+            return thread;
+        }
+
+        public Thread JoinGroups(int timeDeleay, String[] id_post)
+        {
+            Thread thread = new Thread(() =>
+            {
+                bool isRun = true;
+                String next = "";
+                ChromeDriver.Navigate().GoToUrl("https://www.facebook.com/");
+                foreach(String abc in id_post)
+                {
+                    String dataaa = JoinGroup(abc);
+                    if (dataaa.Contains("groupWithSource"))
+                    {
+                        if (callBack != null)
+                        {
+                            callBack("Success JOIN_GROUPS");
+                        }
+                    }
+                    else
+                    {
+                        if (callBack != null)
+                        {
+                            callBack("Error JOIN_GROUPS");
+                        }
+                    }
+                    Thread.Sleep(4000);
+                }
+                if(callBack != null)
+                {
+                    callBack("end JOIN_GROUPS");
                 }
             });
             thread.IsBackground = true;

@@ -81,36 +81,68 @@ namespace WpfApp2
 
         public void Callback(Object data)
         {
-            JObject commentData = (JObject)data;
-            JArray commentInfo = JArray.FromObject(commentData["data"]["node"]["display_comments"]["edges"]);
 
-            this.Dispatcher.Invoke(() =>
+            if(data is String)
             {
-                prComment.Maximum = int.Parse(commentData["data"]["node"]["display_comments"]["count"].ToString());
-            });
-            foreach ( JObject cmt in commentInfo)
+                if (data.ToString().EndsWith("JOIN_GROUPS"))
+                {
+                    if (data.ToString().Contains("Success"))
+                    {
+                        quantityJoinGroups++;
+                    }
+                    else if(data.ToString().Contains("Error"))
+                    {
+
+                    }
+                    else
+                    {
+                        ShowDialog("Join thành công: " + quantityJoinGroups);
+                    }
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        prComment.Maximum = txtIdGroup.Text.Split('|').Length;
+                        prComment.Value = quantityJoinGroups;
+                        lbTotal.Content = txtIdGroup.Text.Split('|').Length;
+                        lbQuatity.Content = quantityJoinGroups;
+                    });
+                }
+            }
+            else
             {
-                Comment comment = new Comment();
-                comment.Id = cmt["node"]["legacy_token"].ToString();
-                comment.Create_at = UnixTimeStampToDateTime(long.Parse(cmt["node"]["created_time"].ToString())).ToString();
-                comment.Message = cmt["node"]["body"].HasValues ? cmt["node"]["body"]["text"].ToString() : "";
-                comment.Username_comment = cmt["node"]["author"]["name"].ToString();
-                comment.Link_user_comment = cmt["node"]["author"]["url"].ToString();
-                comment.Link_comment = "https://www.facebook.com/" + comment.Id;
+                JObject commentData = (JObject)data;
+                JArray commentInfo = JArray.FromObject(commentData["data"]["node"]["display_comments"]["edges"]);
+
                 this.Dispatcher.Invoke(() =>
                 {
-                    
-                    comments.Add(comment);
+                    prComment.Maximum = int.Parse(commentData["data"]["node"]["display_comments"]["count"].ToString());
                 });
-               
+                foreach (JObject cmt in commentInfo)
+                {
+                    Comment comment = new Comment();
+                    comment.Id = cmt["node"]["legacy_token"].ToString();
+                    comment.Create_at = UnixTimeStampToDateTime(long.Parse(cmt["node"]["created_time"].ToString())).ToString();
+                    comment.Message = cmt["node"]["body"].HasValues ? cmt["node"]["body"]["text"].ToString() : "";
+                    comment.Username_comment = cmt["node"]["author"]["name"].ToString();
+                    comment.Link_user_comment = cmt["node"]["author"]["url"].ToString();
+                    comment.Link_comment = "https://www.facebook.com/" + comment.Id;
+                    this.Dispatcher.Invoke(() =>
+                    {
+
+                        comments.Add(comment);
+                    });
+
+                }
+                this.Dispatcher.Invoke(() =>
+                {
+                    lbQuatity.Content = comments.Count + "";
+                    lbTotal.Content = commentData["data"]["node"]["display_comments"]["count"].ToString();
+                    prComment.Value = comments.Count;
+                    prComment.Maximum = int.Parse(commentData["data"]["node"]["display_comments"]["count"].ToString());
+                });
+
             }
-            this.Dispatcher.Invoke(() =>
-            {
-                lbQuatity.Content = comments.Count + "";
-                lbTotal.Content = commentData["data"]["node"]["display_comments"]["count"].ToString();
-                prComment.Value = comments.Count;
-                prComment.Maximum = int.Parse(commentData["data"]["node"]["display_comments"]["count"].ToString());
-            });
+
+            
         }
         public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
         {
@@ -256,6 +288,18 @@ namespace WpfApp2
             {
                 txtProfilePath.Text = openFileDialog.FileName;
             }
+        }
+        int quantityJoinGroups = 0;
+        private void btnScanGroups_Click(object sender, RoutedEventArgs e)
+        {
+            String group = txtIdGroup.Text;
+            if (String.IsNullOrEmpty(group) )
+            {
+                ShowDialog("Nhập id groups đi", "error");
+            }
+            chromeController.init(txtProfilePath.Text, txtChromePath.Text);
+            chromeController.JoinGroups(1000,group.Split('|'));
+
         }
     }
     
